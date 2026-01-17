@@ -142,7 +142,7 @@ export const PROFILE = {
   name: { en: "Anastasiia Hrytsai", jp: "グリサイ アナスタシア", ua: "Анастасія Грицай" },
   email: "hrytsai.anastasiia@gmail.com", 
   linkedin: "https://linkedin.com", 
-  avatar: "/profile.jpg",
+  avatar: "https://drive.google.com/thumbnail?id=1IyqOInZ9ReRyETE4TM7NwFM9MZPxAH7j&sz=w1000",
   fullBio: {
     en: "I am a UI/UX Designer with a unique background in graphic design and multicultural communication. Over the last 3 years in Tokyo's startup scene, I've focused on 'Age-Tech'—creating digital bridges for the aging society.",
     jp: "グラフィックデザインと多文化コミュニケーションの背景を持つUI/UXデザイナーです。東京のスタートアップで3年間、「エイジテック（Age-Tech）」に焦点を当て、高齢化社会のためのデジタルの架け橋を作ることに尽力してきました。",
@@ -175,7 +175,7 @@ export const INTERESTS = [
 export const PROJECTS: Project[] = [
   {
     id: "navitime",
-    thumbnail: "https://placehold.co/1200x800/1e3a8a/ffffff?text=NAVITIME+Redesign",
+    thumbnail: "https://drive.google.com/thumbnail?id=1_OxHOBHxBD36FR1-TDXxZRzWZlf6zfWa&sz=w1200",
     accentColor: "bg-[#007AFF]",
     figmaUrl: "https://www.figma.com/proto/hzx81CrdGeHadYO9whxsqw/%E8%87%AA%E8%BB%A2%E8%BB%8ANAVIGATION-FINAL?page-id=0%3A1&node-id=3-31&p=f&viewport=401%2C481%2C0.22&t=NsaxSieERH8gXG8d-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=3%3A31",
     designSystem: {
@@ -239,7 +239,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "vegwam",
-    thumbnail: "https://placehold.co/1200x800/047857/ffffff?text=VegWam",
+    thumbnail: "https://drive.google.com/thumbnail?id=131BCCcsDh17iE3-JHWPrZnwBW_k2w6Yk&sz=w1200",
     accentColor: "bg-[#F1683C]", 
     designSystem: {
       colors: [
@@ -301,7 +301,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "relaxon",
-    thumbnail: "https://placehold.co/1200x800/7c3aed/ffffff?text=RelaxON",
+    thumbnail: "https://drive.google.com/thumbnail?id=1NbrrKhpIqIbys7IuHxCU78FKhztXLFfa&sz=w1200",
     accentColor: "bg-[#8b5cf6]",
     content: {
       en: {

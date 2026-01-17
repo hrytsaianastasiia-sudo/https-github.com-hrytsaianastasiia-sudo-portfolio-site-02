@@ -7,6 +7,8 @@ import {
 import { Language, Project } from './types';
 import { VEGWAM_DATA, LABELS, PROFILE, SKILLS, LANGUAGES, INTERESTS, PROJECTS } from './constants';
 
+const FALLBACK_AVATAR = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400";
+
 // --- VEGWAM COMPONENT HELPERS ---
 
 const VegTag: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -122,8 +124,8 @@ const VegProcessStrip = ({ steps }: { steps: string[] }) => (
 
 const VegImageFigure = ({ src, caption, annotations }: { src: string, caption: string, annotations?: string[] }) => (
   <figure className="my-8">
-    <div className="bg-white p-2 md:p-4 rounded-2xl border border-[#dddddd] shadow-sm">
-      <img src={src} alt={caption} className="w-full h-auto rounded-lg" />
+    <div className="bg-white p-2 md:p-4 rounded-2xl border border-[#dddddd] shadow-sm overflow-hidden">
+      <img src={src} alt={caption} className="w-full h-auto rounded-lg object-cover" />
     </div>
     <figcaption className="mt-4 text-center">
       <p className="font-bold text-[#111111]">{caption}</p>
@@ -178,7 +180,7 @@ const VegWamCaseStudy = ({ lang }: { lang: Language }) => {
             </div>
           </div>
           <div className="flex justify-center mt-8 md:mt-0">
-             <img src="https://placehold.co/400x800/145850/ffffff?text=VegWam+App" alt="VegWam App Mockup" className="w-56 md:w-80 shadow-2xl rounded-[3rem] border-8 border-white" />
+             <img src="https://images.unsplash.com/photo-1516550893923-274d57ce64a3?auto=format&fit=crop&q=80&w=400" alt="VegWam App Mockup" className="w-56 md:w-80 shadow-2xl rounded-[3rem] border-8 border-white" />
           </div>
         </div>
       </section>
@@ -214,7 +216,7 @@ const VegWamCaseStudy = ({ lang }: { lang: Language }) => {
         <section>
           <VegSectionHeader overline="IA & FLOW" title={lang === 'jp' ? "情報設計と体験フロー" : "IA & User Flow"} />
           <VegImageFigure 
-            src="https://placehold.co/1200x600/e6eddd/145850?text=Information+Architecture+Map" 
+            src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=1200" 
             caption={lang === 'jp' ? "迷わず目的にたどり着くための情報構造" : "Simplified Information Architecture"}
             annotations={["Home", "Search", "Community", "Profile"]}
           />
@@ -226,7 +228,7 @@ const VegWamCaseStudy = ({ lang }: { lang: Language }) => {
           
           <div className="space-y-12 md:space-y-16">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <img src="https://placehold.co/600x1200/ffffff/145850?text=Home+Screen" className="rounded-xl shadow-lg border border-[#dddddd]" />
+              <img src="https://images.unsplash.com/photo-1623423166904-45366472d8bf?auto=format&fit=crop&q=80&w=600" className="rounded-xl shadow-lg border border-[#dddddd]" />
               <div>
                 <h3 className="text-xl font-bold text-[#145850] mb-4">{t.ui.p1.title[lang]}</h3>
                 <p className="text-[#555555] leading-relaxed mb-6">
@@ -242,7 +244,7 @@ const VegWamCaseStudy = ({ lang }: { lang: Language }) => {
                   {t.ui.p2.body[lang]}
                 </p>
               </div>
-              <img src="https://placehold.co/600x1200/ffffff/145850?text=Search+Screen" className="rounded-xl shadow-lg border border-[#dddddd] order-1 md:order-2" />
+              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=600" className="rounded-xl shadow-lg border border-[#dddddd] order-1 md:order-2" />
             </div>
           </div>
         </section>
@@ -787,37 +789,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, lang }) => {
   );
 };
 
-const Modal: React.FC<{ isOpen: boolean; onClose: () => void; project: Project | null; lang: Language }> = ({ isOpen, onClose, project, lang }) => {
-  useEffect(() => {
-    if (isOpen) { 
-      document.body.style.overflow = 'hidden'; 
-    } else { 
-      document.body.style.overflow = 'unset'; 
-    }
-  }, [isOpen]);
-
-  if (!isOpen || !project) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-gray-900/60 backdrop-blur-sm p-0 md:p-6 animate-in fade-in duration-200">
-      <div className="bg-white w-full h-[90vh] md:h-[90vh] md:rounded-[2rem] rounded-t-[2rem] shadow-2xl flex flex-col overflow-hidden relative">
-        
-        <button onClick={onClose} className="absolute top-4 right-4 z-50 bg-white/50 backdrop-blur-md p-3 rounded-full hover:bg-white transition-all shadow-sm">
-          <X size={20} className="text-gray-800" />
-        </button>
-
-        <div className="flex-1 overflow-y-auto relative scroll-smooth">
-          <div className="pb-32">
-            <ProjectDetail project={project} lang={lang} />
-          </div>
-        </div>
-
-        <ProgressiveBlur position="bottom" height="150px" />
-      </div>
-    </div>
-  );
-};
-
 interface ProjectCardProps {
   project: Project;
   lang: Language;
@@ -862,6 +833,7 @@ export default function Portfolio() {
   const [lang, setLang] = useState<Language>('jp');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [view, setView] = useState<'home' | 'projects' | 'project-detail'>('home');
+  const [previousView, setPreviousView] = useState<'home' | 'projects'>('home');
 
   // New state for interests visibility
   const [interestsRef, setInterestsRef] = useState<HTMLDivElement | null>(null);
@@ -893,12 +865,11 @@ export default function Portfolio() {
     }
   };
 
-  const handleProjectClick = (project: Project, from: 'home' | 'grid') => {
+  const handleProjectClick = (project: Project, source: 'home' | 'projects') => {
+    setPreviousView(source);
     setActiveProject(project);
-    if (from === 'grid') {
-      setView('project-detail');
-      window.scrollTo(0,0);
-    }
+    setView('project-detail');
+    window.scrollTo(0,0);
   };
 
   return (
@@ -989,6 +960,11 @@ export default function Portfolio() {
                           src={PROFILE.avatar} 
                           alt="Anastasiia Profile" 
                           className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = FALLBACK_AVATAR;
+                            target.onerror = null;
+                          }}
                       />
                     </div>
                     {/* Badge */}
@@ -1154,7 +1130,7 @@ export default function Portfolio() {
                   key={project.id}
                   project={project}
                   lang={lang}
-                  onClick={() => handleProjectClick(project, 'grid')}
+                  onClick={() => handleProjectClick(project, 'projects')}
                   isGrid={true}
                 />
               ))}
@@ -1164,16 +1140,20 @@ export default function Portfolio() {
       )}
 
       {view === 'project-detail' && activeProject && (
-        <div className="min-h-screen bg-white animate-in fade-in duration-300 pb-20">
+        <div className="min-h-screen bg-white animate-in fade-in duration-300 pb-20 relative">
           <nav className="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center pointer-events-none">
             <button 
-              onClick={() => setView('projects')} 
+              onClick={() => setView(previousView)} 
               className="pointer-events-auto bg-white/80 backdrop-blur-md p-3 rounded-full shadow-sm hover:bg-white transition-all text-gray-800 border border-gray-100 group"
             >
               <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
             </button>
           </nav>
           <ProjectDetail project={activeProject} lang={lang} />
+          
+          <div className="fixed bottom-0 left-0 right-0 z-40 h-32 pointer-events-none">
+             <ProgressiveBlur position="bottom" height="100%" />
+           </div>
         </div>
       )}
 
@@ -1196,15 +1176,6 @@ export default function Portfolio() {
           </div>
         </footer>
       )}
-
-      {/* Only show modal when in Home view */}
-      <Modal 
-        key={activeProject?.id}
-        isOpen={!!activeProject && view === 'home'} 
-        onClose={() => setActiveProject(null)} 
-        project={activeProject} 
-        lang={lang} 
-      />
 
     </div>
   );
