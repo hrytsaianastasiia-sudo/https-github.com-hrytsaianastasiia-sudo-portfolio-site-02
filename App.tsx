@@ -6,6 +6,8 @@ import {
 } from 'lucide-react';
 import { Language, Project } from './types';
 import { VEGWAM_DATA, LABELS, PROFILE, SKILLS, LANGUAGES, INTERESTS, PROJECTS } from './constants';
+import Particles from './Particles';
+import InteractiveHoverButton from './InteractiveHoverButton';
 
 const FALLBACK_AVATAR = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400";
 
@@ -916,8 +918,20 @@ export default function Portfolio() {
       {view === 'home' && (
         <>
           {/* --- Hero Section (Trend: Big Typography & Split Layout) --- */}
-          <section className="pt-32 pb-16 md:pt-48 md:pb-32 px-6">
-            <div className="max-w-6xl mx-auto">
+          <section className="pt-32 pb-16 md:pt-48 md:pb-32 px-6 relative overflow-hidden">
+             {/* Particles Background */}
+             <div className="absolute inset-0 z-0">
+               <Particles 
+                 className="w-full h-full"
+                 quantity={150}
+                 staticity={50}
+                 ease={80}
+                 color="#145850"
+                 refresh={false}
+               />
+             </div>
+             
+             <div className="max-w-6xl mx-auto relative z-10">
               <div className="grid md:grid-cols-12 gap-12 items-center">
                 
                 <div className="md:col-span-8 space-y-6 md:space-y-8 order-2 md:order-1">
@@ -941,13 +955,11 @@ export default function Portfolio() {
                   </p>
 
                   <div className="pt-4">
-                    <button 
+                    <InteractiveHoverButton 
                       onClick={() => { setView('projects'); window.scrollTo(0,0); }}
-                      className="group bg-[#145850] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#0f4640] transition-all shadow-xl shadow-[#145850]/20 flex items-center gap-3"
                     >
-                      {LABELS.hero.cta[lang]} 
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
+                      {LABELS.hero.cta[lang]}
+                    </InteractiveHoverButton>
                   </div>
                 </div>
 
@@ -983,7 +995,7 @@ export default function Portfolio() {
           </section>
 
           {/* --- Projects Section (Trend: Large Cards with Hover Reveal) --- */}
-          <section id="work" className="py-24 px-6 bg-white rounded-t-[3rem] shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.05)]">
+          <section id="work" className="relative z-10 -mt-24 py-24 px-6 bg-white rounded-t-[3rem] shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.05)]">
             <div className="max-w-6xl mx-auto">
               <div className="mb-16">
                 <h2 className="text-3xl font-black text-gray-900 mb-2">{LABELS.sectionTitles.work[lang]}</h2>
@@ -1151,9 +1163,6 @@ export default function Portfolio() {
           </nav>
           <ProjectDetail project={activeProject} lang={lang} />
           
-          <div className="fixed bottom-0 left-0 right-0 z-40 h-32 pointer-events-none">
-             <ProgressiveBlur position="bottom" height="100%" />
-           </div>
         </div>
       )}
 
